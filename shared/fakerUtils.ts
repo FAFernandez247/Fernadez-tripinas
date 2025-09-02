@@ -7,7 +7,7 @@ export function generateTestUser() {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
   const newEmail = faker.internet.email({ firstName: `${firstName}`, lastName: `${lastName}` }).toLowerCase();
-  const newUsernameBase = faker.internet.userName({ firstName: `${firstName}` }).slice(0, 8).toLowerCase().replace(/[^a-z0-9]/g, '');
+  const newUsernameBase = faker.internet.username({ firstName: `${firstName}` }).slice(0, 8).toLowerCase().replace(/[^a-z0-9]/g, '');
   const newUsername = `${newUsernameBase}_${randomNumber}`;
   
 
