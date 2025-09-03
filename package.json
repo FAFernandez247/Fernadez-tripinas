@@ -7,9 +7,9 @@
     "start:frontend": "npm --workspace frontend start",
     "start:backend": "npm --workspace backend start",
     "test": "npx playwright test",
-    "login": "npx playwright test tests/features/login.spec.ts --ui",
-    "register": "npx playwright test tests/features/registration.spec.ts --ui",
-    "profile": "npx playwright test tests/features/profile.spec.ts --ui"
+    "login": "npx playwright test tests/features/login.spec.ts",
+    "register": "npx playwright test tests/features/registration.spec.ts",
+    "profile": "npx playwright test tests/features/profile.spec.ts"
   },
   "repository": {
     "type": "git",

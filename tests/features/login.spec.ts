@@ -1,4 +1,4 @@
-import { test } from '../../shared/base.ts';
+import { test, expect } from '../../shared/base.ts';
 import users from '../../test-data/users.json';
 
 const passwordErrorMessage = 'Password is incorrect. Try again, or use another method.';
@@ -11,7 +11,7 @@ test.describe('Login and Profile Verification', {
     await loginPage.navigateToLogin();
   });
   users.forEach(user => {
-    test(`Should login as ${user.username} and verify profile`, { tag: "@Happy-Path" }, async ({ loginPage }) => {
+    test(`Should login as ${user.username} and verify profile`, { tag: "@Happy-Path" }, async ({ loginPage, page }) => {
       await test.step('Enter a valid email address or username', async () => {
         await loginPage.enterEmailOrUsername(user.email);
       });
@@ -21,6 +21,7 @@ test.describe('Login and Profile Verification', {
       // Wait for navigation to dashboard
       await test.step('Verify successful login and redirection to dashboard', async () => {
         await loginPage.verifyDashboard();
+        await expect(page).toHaveScreenshot('dashboard-UI.png');
       });
       await test.step('Verify that the Profile section is displayed and shows the correct: Full Name, Username, Email address', async () => {
         await loginPage.verifyProfileDetails(user.fullName, user.username, user.email);
@@ -135,15 +136,17 @@ test.describe('Login UI and Navigation', {
     await loginPage.navigateToLogin();
   });
   users.forEach(user => {
-    test('Verify login screen UI and navigation flow', {tag: ["@Navigation", "@UI"]}, async ({ loginPage }) =>{
+    test('Verify login screen UI and navigation flow', {tag: ["@Navigation", "@UI"]}, async ({ loginPage, page }) =>{
       await test.step('Verify login page UI elements are visible', async () => {
         await loginPage.verifyLoginPageUI();
+        await expect(page).toHaveScreenshot('login-UI.png');
       });
       await test.step('Enter a valid email address/username', async () => {
         await loginPage.enterEmailOrUsername(user.email);
       });
-      await test.step('Verify enter password page UI elements are visible', async () => {
+      await test.step('Verify enter password page UI elements are visible', async () => {     
         await loginPage.verify2ndLoginPageUI();
+        await expect(page).toHaveScreenshot('login-UI2.png');
       });
       await test.step('Enter a valid password', async () => {
         await loginPage.enterPassword(user.password);
@@ -152,7 +155,7 @@ test.describe('Login UI and Navigation', {
         await loginPage.verifyDashboard();
       });
     });
-    test('Verify "Forgot Password?" link navigation and UI', { tag: ["@Navigation", "@UI"] }, async ({ loginPage }) => {
+    test('Verify "Forgot Password?" link navigation and UI', { tag: ["@Navigation", "@UI"] }, async ({ loginPage, page }) => {
       await test.step('Enter a valid email address/username', async () => {
         await loginPage.enterEmailOrUsername(user.email);
       });
@@ -167,6 +170,7 @@ test.describe('Login UI and Navigation', {
       });
       await test.step('Verify user is navigated to Reset Password page and UI elements are visible', async () => {
         await loginPage.verifyResetPasswordPageUI();
+        await expect(page).toHaveScreenshot('ForgotPassword-UI.png');
       });
     });
     test('Verify "Back" link navigation from Forgot Password page', { tag: ["@Navigation"] }, async ({ loginPage }) => {
@@ -183,7 +187,7 @@ test.describe('Login UI and Navigation', {
         await loginPage.verify2ndLoginPageUI();
       });
     });
-    test('Verify "Get Help" link navigation from Login page', { tag: ["@Navigation", "@UI"] }, async ({ loginPage }) => {
+    test('Verify "Get Help" link navigation from Login page', { tag: ["@Navigation", "@UI"] }, async ({ loginPage, page }) => {
       await test.step('Enter a valid email address/username', async () => {
         await loginPage.enterEmailOrUsername(user.email);
       });
@@ -192,6 +196,7 @@ test.describe('Login UI and Navigation', {
       });
       await test.step('Verify user is navigated to Get Help page and UI elements are visible', async () => {
         await loginPage.verifyGetHelpPageUI();
+        await expect(page).toHaveScreenshot('GetHelp-UI.png');
       });
     });
     test('Verify "Back" link navigation from Get help page', { tag: ["@Navigation"] }, async ({ loginPage }) => {
