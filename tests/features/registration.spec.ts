@@ -12,12 +12,13 @@ test.describe('Registration UI', {
     test.beforeEach(async ({ loginPage }) => {
         await loginPage.navigateToLogin();
     });
-    test('Verify all fields are present on the registration page', { tag: ['@UI'] }, async ({ loginPage, registerPage }) => {
+    test('Verify all fields are present on the registration page', { tag: ['@UI'] }, async ({ loginPage, registerPage, page }) => {
         await test.step('Click "Sign up" link', async () => {
             await loginPage.clickSignUpLink();
         });
         await test.step('Verify fields are present on the registration page', async () => {
             await registerPage.verifySignUpPageUI();
+            await expect(page).toHaveScreenshot('registration-UI.png');
         });
     });
     test('Verify optional and required fields on Sign Up page', { tag: ['@UI'] }, async ({ loginPage, registerPage }) => {
@@ -48,7 +49,7 @@ test.describe('Registration - Field Validation', {
         await loginPage.clickSignUpLink();
     });
     users.forEach(user => {
-        test('Verify validation message when username exceeds the character limit', { tag: ['@validation', '@max-length'] }, async ({ registerPage }) => {
+        test('Verify validation message when username exceeds the character limit', { tag: ['@validation', '@max-length'] }, async ({ registerPage, page }) => {
             await test.step('Fill username with more than 64 characters', async () => {
                 await registerPage.usernameInput.fill('a'.repeat(65));
             });
@@ -59,6 +60,11 @@ test.describe('Registration - Field Validation', {
             });
             await test.step('Verify that a validation message "Your username must be between 4 and 64 characters long." is displayed', async () => {
                 await registerPage.verifyUsernameErrorMessage('Your username must be between 4 and 64 characters long.');
+                await expect(page).toHaveScreenshot('registration-error-styling.png', {
+                    mask: [
+                        page.locator('#emailAddress-field'),
+                    ]
+                });
             });
         });
         test('Verify validation message when username is below minimum length', { tag: ['@validation', '@min-length'] }, async ({ registerPage }) => {
@@ -74,6 +80,32 @@ test.describe('Registration - Field Validation', {
                 await registerPage.verifyUsernameErrorMessage('Your username must be between 4 and 64 characters long.');
             });
         });
+        test('Verify validation message when username has invalid format', { tag: ['@validation'] }, async ({ registerPage }) => {
+            await test.step('Fill username with invalid characters', async () => {
+                await registerPage.usernameInput.fill('John@123!');
+            });
+            await test.step('Fill email and password with valid values', async () => {
+                await registerPage.emailInput.fill(testUser.email);
+                await registerPage.registerPasswordInput.fill(testUser.password);
+                await registerPage.continueButton.click();
+            });
+            await test.step('Verify that a validation message "Username can only contain letters, numbers and - or _" is displayed', async () => {
+                await registerPage.verifyUsernameErrorMessage('Username can only contain letters, numbers and - or _');
+            });
+        });
+        test('Verify validation message when email has multiple "@" sign', { tag: ['@validation'] }, async ({ registerPage }) => {
+            await test.step('Fill email with multiple "@" sign', async () => {
+                await registerPage.emailInput.fill('user@@example.com');
+            });
+            await test.step('Fill username and password with valid values', async () => {
+                await registerPage.usernameInput.fill(testUser.username);
+                await registerPage.registerPasswordInput.fill(testUser.password);
+                await registerPage.continueButton.click();
+            });
+            await test.step('Verify that a validation message "Email address must be a valid email address." is displayed', async () => {
+                await registerPage.isEmailErrorVisible('Email address must be a valid email address.');
+            });
+        });        
         test('Verify validation message when first name exceeds the character limit', { tag: ['@validation', '@max-length'] }, async ({ registerPage }) => {
             await test.step('Fill first name with more than 256 characters', async () => {
                 await registerPage.firstNameInput.fill('a'.repeat(257));
@@ -142,7 +174,7 @@ test.describe('Registration - Field Validation', {
                 await registerPage.continueButton.click();
             });
             await test.step('Verify that a validation error message is displayed for email', async () => {
-                await registerPage.isEmailErrorVisible();
+                await registerPage.isEmailErrorVisible('That email address is taken. Please try another.');
             });
         });
         test('Verify that registration fails when using an already registered username', { tag: '@UnhappyPath' }, async ({ registerPage }) => {
@@ -154,7 +186,7 @@ test.describe('Registration - Field Validation', {
                 await registerPage.registerPasswordInput.fill(testUser.password);
                 await registerPage.continueButton.click();
             });
-            await test.step('Verify that a validation error message is displayed for email', async () => {
+            await test.step('Verify that a validation error message is displayed for username', async () => {
                 await registerPage.verifyUsernameErrorMessage('That username is taken. Please try another.');
             });
         });
@@ -259,7 +291,7 @@ test.describe('Registration - Successful flow', {
             await registerPage.lastNameInput.fill('   Doe   ');
         });
         await test.step('Fill email, username and password with valid values', async () => {
-            await registerPage.fillRequiredFields('   test@example.com   ', '   testuser   ', testUser.password);
+            await registerPage.fillRequiredFields('   test@example.com   ', '   testuser098   ', testUser.password);
         });
         await test.step('Verify submitted values are trimmed', async () => {
             await loginPage.verifyDashboard();

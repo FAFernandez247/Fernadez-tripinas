@@ -66,6 +66,7 @@ export class RegisterPage {
      * @param username
      * @param email
      * @param registerPassword 
+     * @param registerErrorMessage
      */
 
     async fillOptionalFields(firstName: string, lastName: string) {
@@ -103,8 +104,8 @@ export class RegisterPage {
         await expect.soft(this.errorMessageLastName).toBeVisible();
     }
 
-    async isEmailErrorVisible() {
+    async isEmailErrorVisible(registerErrorMessage: string): Promise<void> {
         await expect(this.errorMessageEmailSignUp).toBeVisible();
-        await expect(this.errorMessageEmailSignUp).toContainText('That email address is taken. Please try another.');
+        await expect(this.errorMessageEmailSignUp).toContainText(registerErrorMessage);
     }
 }
