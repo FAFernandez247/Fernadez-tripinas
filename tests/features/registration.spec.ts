@@ -1,4 +1,3 @@
-import { after } from 'node:test';
 import { test, expect } from '../../shared/base.ts';
 import { generateTestUser } from '../../shared/fakerUtils.ts';
 import users from '../../test-data/users.json';

@@ -5,13 +5,17 @@ import type { GitHubActionOptions } from "@estruyf/github-actions-reporter";
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+// require("dotenv").config({ path: path.resolve(__dirname, ".env") });
+// dotenv.config();
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+export const STORAGE_STATE = path.join(__dirname, "./.auth/user.json");
+
 export default defineConfig({
   timeout: 60_000,
   testDir: './tests',
@@ -49,6 +53,22 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    {
+      name: "setup",
+      testMatch: "**/*.setup.ts",
+    },
+    {
+      name: "profile",
+      dependencies: ["setup"],
+      testMatch: "tests/features/profile.spec.ts",
+      use: {
+        storageState: STORAGE_STATE,
+        ...devices["Desktop Chrome"],
+        launchOptions: {
+          args: ["--start-maximized"],
+        },
+      },
+    },
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },

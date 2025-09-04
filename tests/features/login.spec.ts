@@ -21,7 +21,7 @@ test.describe('Login and Profile Verification', {
       // Wait for navigation to dashboard
       await test.step('Verify successful login and redirection to dashboard', async () => {
         await loginPage.verifyDashboard();
-        await expect(page).toHaveScreenshot('dashboard-UI.png');
+        await expect.soft(page).toHaveScreenshot('dashboard-UI.png');
       });
       await test.step('Verify that the Profile section is displayed and shows the correct: Full Name, Username, Email address', async () => {
         await loginPage.verifyProfileDetails(user.fullName, user.username, user.email);
