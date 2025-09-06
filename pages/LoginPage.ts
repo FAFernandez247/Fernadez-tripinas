@@ -76,7 +76,7 @@ export class LoginPage {
     }
 
     async verifyDashboard(): Promise<void>  {
-        await this.page.waitForURL('http://localhost:5173/');
+        await this.page.waitForURL('http://localhost:5173/dashboard');
         await expect(this.dashboardText).toBeVisible();
         await expect(this.dashboardText).toHaveText('Dashboard Home');
     }
@@ -161,7 +161,7 @@ export class LoginPage {
     }
 
     async verifySignedOut() {
-        await this.page.waitForURL('http://localhost:5173/');
+        await this.page.waitForURL('http://localhost:5173/dashboard');
         await expect(this.signedOutText).toBeVisible();
         await expect(this.signedOutText).toContainText('You are signed out.');
     }

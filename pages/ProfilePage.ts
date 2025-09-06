@@ -82,7 +82,7 @@ export class ProfilePage {
         await this.addEmailButton.click();
     }
 
-        /**
+    /**
      * @param newPassword
      * @param confirmPassword
      * @param newPassError
