@@ -11,14 +11,13 @@ test.describe('Login and Profile Verification', {
     await loginPage.navigateToLogin();
   });
   users.forEach(user => {
-    test(`Should login as ${user.username} and verify profile`, { tag: "@Happy-Path" }, async ({ loginPage, page }) => {
+    test(`Should login as ${user.username} and verify profile`, { tag: "@HappyPath" }, async ({ loginPage, page }) => {
       await test.step('Enter a valid email address or username', async () => {
         await loginPage.enterEmailOrUsername(user.email);
       });
       await test.step('Enter a valid password', async () => {
         await loginPage.enterPassword(user.password);
       });
-      // Wait for navigation to dashboard
       await test.step('Verify successful login and redirection to dashboard', async () => {
         await loginPage.verifyDashboard();
         await expect.soft(page).toHaveScreenshot('dashboard-UI.png');
@@ -27,7 +26,7 @@ test.describe('Login and Profile Verification', {
         await loginPage.verifyProfileDetails(user.fullName, user.username, user.email);
       });
     });
-    test('Should login using valid email and password', { tag: "@Happy-Path" }, async ({ loginPage }) => {
+    test('Should login using valid email and password', { tag: "@HappyPath" }, async ({ loginPage }) => {
       await test.step('Enter a valid email address', async () => {
         await loginPage.enterEmailOrUsername(user.email);
       });
@@ -38,7 +37,7 @@ test.describe('Login and Profile Verification', {
         await loginPage.verifyDashboard();
       });
     });
-    test('Should login using valid username and password', { tag: "@Happy-Path" }, async ({ loginPage }) => {
+    test('Should login using valid username and password', { tag: "@HappyPath" }, async ({ loginPage }) => {
       await test.step('Enter a valid username', async () => {
         await loginPage.enterEmailOrUsername(user.username);
       });
@@ -49,7 +48,7 @@ test.describe('Login and Profile Verification', {
         await loginPage.verifyDashboard();
       });
     });
-    test('Verify that user is not able to login with invalid username/email address', { tag: "@UnHappy-Path" }, async ({ loginPage }) => {
+    test('Verify that user is not able to login with invalid username/email address', { tag: "@UnHappyPath" }, async ({ loginPage }) => {
       await test.step('Enter an invalid email address or username', async () => {
         await loginPage.enterEmailOrUsername('invalid@example.com');
       });
@@ -57,7 +56,7 @@ test.describe('Login and Profile Verification', {
         await loginPage.verifyEmailErrorMessage();
       });
     });
-    test('Verify that user is not able to login with valid email address and invalid password', { tag: "@UnHappy-Path" }, async ({ loginPage }) => {
+    test('Verify that user is not able to login with valid email address and invalid password', { tag: "@UnHappyPath" }, async ({ loginPage }) => {
       await test.step('Enter a valid email address', async () => {
         await loginPage.enterEmailOrUsername(user.email);
       });
@@ -68,7 +67,7 @@ test.describe('Login and Profile Verification', {
         await loginPage.verifyPasswordErrorMessage(passwordErrorMessage);
       });
     });
-    test('Verify that validation message gets displayed when password field is left blank', { tag: "@UnHappy-Path" }, async ({ loginPage }) => {
+    test('Verify that validation message gets displayed when password field is left blank', { tag: "@UnHappyPath" }, async ({ loginPage }) => {
       await test.step('Enter a valid email address', async () => {
         await loginPage.enterEmailOrUsername(user.email);
       });

@@ -229,7 +229,7 @@ test.describe('Registration - Successful flow', {
         });
     });
     test('Verify First Name rejects invalid characters', {
-    annotation: { type: 'Issue', description: 'User can successfully register with invalid characters', }, 
+    annotation: { type: 'Issue', description: 'User can successfully register with invalid characters'}, tag: ['@issue'] 
     }, async ({ registerPage }) => {
         await test.step('Fill First Name with numbers and special characters', async () => {
             await registerPage.firstNameInput.fill('J0hn@23');
@@ -254,7 +254,7 @@ test.describe('Registration - Successful flow', {
         });
     });
     test('Verify Last Name rejects invalid characters', {
-    annotation: { type: 'Issue', description: 'User can successfully register with invalid characters', },
+    annotation: { type: 'Issue', description: 'User can successfully register with invalid characters'}, tag: ['@issue']
     }, async ({ registerPage }) => {
         await test.step('Fill Last Name with numbers and special characters', async () => {
             await registerPage.lastNameInput.fill('D0e-J0hn@23');

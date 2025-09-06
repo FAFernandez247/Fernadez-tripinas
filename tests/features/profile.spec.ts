@@ -21,20 +21,8 @@ test.describe.serial('Account Management', async () => {
         test.beforeEach(async ({ page }) => {
             await page.goto('http://localhost:5173/');
         });
-        // test.beforeEach(async ({ loginPage, registerPage }) => {
-        //     await loginPage.navigateToLogin();
-        //     await loginPage.clickSignUpLink();
-        //     await registerPage.fillOptionalFields(testUser.firstName, testUser.lastName);
-        //     await registerPage.fillRequiredFields(testUser.email, testUser.username, testUser.password);
-        //     await loginPage.verifyDashboard();
-        // });
-        // test.afterEach(async ({ profilePage }) => {
-        //     await profilePage.clickIcon();
-        //     await profilePage.clickManageAccount();
-        //     await profilePage.clickSecurity();
-        //     await profilePage.deleteAccount();
-        // });
-        test('Verify Account modal, Profile details and Security sections are visible when Managa Account buton is clicked', {tag: ['@UI', '@modal', '@visial']}, async ({ profilePage, page }) => {
+
+        test('Verify Account modal, Profile details and Security sections are visible when Managa Account buton is clicked', {tag: ['@UI', '@modal', '@visual']}, async ({ profilePage, page }) => {
             await test.step('Click the icon in the top-right corner', async () => {
                 await profilePage.clickIcon();
             });
@@ -72,7 +60,7 @@ test.describe.serial('Account Management', async () => {
                 await profilePage.clickExitModal();
             });
         });
-        test('Verify delete account modal appears correctly', {tag: ['@UI', '@modal', '@visial']}, async ({page, profilePage}) => {
+        test('Verify delete account modal appears correctly', {tag: ['@UI', '@modal', '@visual']}, async ({page, profilePage}) => {
             await test.step('Click the icon in the top-right corner', async () => {
                 await profilePage.clickIcon();
             });
@@ -101,23 +89,10 @@ test.describe.serial('Account Management', async () => {
     annotation: { type: 'functional', description: 'Verify user can update and add profile information' },
     }, () => {
 
-        // test.beforeEach(async ({ loginPage, registerPage }) => {
-        //     await loginPage.navigateToLogin();
-        //     await loginPage.clickSignUpLink();
-        //     await registerPage.fillOptionalFields(testUser.firstName, testUser.lastName);
-        //     await registerPage.fillRequiredFields(testUser.email, testUser.username, testUser.password);
-        //     await loginPage.verifyDashboard();
-        // });
         test.beforeEach(async ({ page }) => {
             await page.goto('http://localhost:5173/');
         });
-        // test.afterEach(async ({ profilePage }) => {
-        //     await profilePage.clickIcon();
-        //     await profilePage.clickManageAccount();
-        //     await profilePage.clickSecurity();
-        //     await profilePage.deleteAccount();
-        // });
-        // Happy path
+
         test('Verify user can update first and last name', { tag: ['@update', '@HappyPath', '@name'] }, async ({ profilePage, registerPage, loginPage, page }) => {
             await test.step('Click the icon in the top-right corner', async () => {
                 await page.goto('http://localhost:5173/');
