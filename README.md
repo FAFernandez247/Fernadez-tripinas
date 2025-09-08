@@ -32,7 +32,7 @@ npm run dev
 - Saves the credentials in .auth/baseUser.json
 - Stores a storage state (.auth/user.json) so profile tests can skip login
 
-## ▶ Run Setup (Register a User First)
+#### ▶ Run Setup (Register a User First)
 ```bash
 npx playwright test tests/features/auth.setup.ts --project setup
 ```
@@ -68,7 +68,7 @@ projects: [
 - Added .toHaveScreenshot() across Login, Registration, and Profile
 - Used masking for dynamic data (e.g., Faker names/usernames/emails) → prevents false diffs
 - Configured screenshots to save only on failed tests in playwright.config.ts
-Captures:
+**Captures:**
  - ✅ Successful & failed Login
  - ✅ Login UI
  - ✅ Successful & failed Registration
@@ -76,7 +76,7 @@ Captures:
  - ✅ Profile modals
 
 **🧪 Example Spec Files**
-## ▶ Run Login & Registration Suites
+#### ▶ Run Login & Registration Suites
 ***These can be run anytime since they have/create their own users:***
 ```bash
 npx playwright test tests/features/login.spec.ts
@@ -88,7 +88,7 @@ npm run login
 npm run register
 ```
 
-## ▶ Run Profile Suite (Depends on Setup)
+#### ▶ Run Profile Suite (Depends on Setup)
 ```bash
 npx playwright test tests/features/profile.spec.ts --project profile
 ```
@@ -115,7 +115,7 @@ npx playwright show-report
 ### 📄 Overview###
 ***This suite covers Login, Registration, and Profile Management workflows, including happy paths, unhappy paths, validations, and visual regression tests.***
 
-## 🔐 1. Login Tests##
+#### 🔐 1. Login Tests##
 ***Description: Validates user authentication flows.***
 
 **✅ Successful Login**
@@ -128,7 +128,7 @@ npx playwright show-report
 - Wrong password → error message displayed.
 - Empty fields → validation error displayed.
 
-## 🆕 2. Registration Tests##
+#### 🆕 2. Registration Tests##
 ***Description: Validates new user registration using Faker.js for unique data.***
 
 **✅ Successful Registration**
@@ -142,7 +142,7 @@ npx playwright show-report
 - Below minimum length/Weak/invalid password → validation error.
 - Empty required fields → validation error.
 
-## 👤 3. Profile Management Tests##
+#### 👤 3. Profile Management Tests##
 ***Description: Validates user profile updates and deletion. Requires auth setup to create a base user before execution.***
 
 **✅ Positive Flow (executed in .serial order)**
