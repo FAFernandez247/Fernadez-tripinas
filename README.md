@@ -32,7 +32,7 @@ npm run dev
 - Saves the credentials in .auth/baseUser.json
 - Stores a storage state (.auth/user.json) so profile tests can skip login
 
-# ▶ Run Setup (Register a User First)
+## ▶ Run Setup (Register a User First)
 ```bash
 npx playwright test tests/features/auth.setup.ts --project setup
 ```
@@ -76,7 +76,7 @@ Captures:
  - ✅ Profile modals
 
 **🧪 Example Spec Files**
-# ▶ Run Login & Registration Suites
+## ▶ Run Login & Registration Suites
 ***These can be run anytime since they have/create their own users:***
 ```bash
 npx playwright test tests/features/login.spec.ts
@@ -88,7 +88,7 @@ npm run login
 npm run register
 ```
 
-# ▶ Run Profile Suite (Depends on Setup)
+## ▶ Run Profile Suite (Depends on Setup)
 ```bash
 npx playwright test tests/features/profile.spec.ts --project profile
 ```
