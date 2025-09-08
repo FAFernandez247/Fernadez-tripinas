@@ -24,6 +24,7 @@ test.describe('Login and Profile Verification', {
       });
       await test.step('Verify that the Profile section is displayed and shows the correct: Full Name, Username, Email address', async () => {
         await loginPage.verifyProfileDetails(user.fullName, user.username, user.email);
+        await page.screenshot({ path: 'test-screenshot/successful-login.png', fullPage: true })
       });
     });
     test('Should login using valid email and password', { tag: "@HappyPath" }, async ({ loginPage }) => {
@@ -56,7 +57,7 @@ test.describe('Login and Profile Verification', {
         await loginPage.verifyEmailErrorMessage();
       });
     });
-    test('Verify that user is not able to login with valid email address and invalid password', { tag: "@UnHappyPath" }, async ({ loginPage }) => {
+    test('Verify that user is not able to login with valid email address and invalid password', { tag: "@UnHappyPath" }, async ({ loginPage, page }) => {
       await test.step('Enter a valid email address', async () => {
         await loginPage.enterEmailOrUsername(user.email);
       });
@@ -65,6 +66,7 @@ test.describe('Login and Profile Verification', {
       });
       await test.step('Verify error "Password is incorrect. Try again, or use another method." is visible', async () => {
         await loginPage.verifyPasswordErrorMessage(passwordErrorMessage);
+        await page.screenshot({ path: 'test-screenshot/unsuccessful-login.png', fullPage: true })
       });
     });
     test('Verify that validation message gets displayed when password field is left blank', { tag: "@UnHappyPath" }, async ({ loginPage }) => {

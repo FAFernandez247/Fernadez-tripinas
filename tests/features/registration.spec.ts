@@ -140,7 +140,7 @@ test.describe('Registration - Field Validation', {
                 await loginPage.verifyPasswordErrorMessage(passwordErrorMessage);
             });
         });
-        test('Verify validation message when password is weak', { tag: ['@validation', '@weak-password'] }, async ({ registerPage, loginPage }) => {
+        test('Verify validation message when password is weak', { tag: ['@validation', '@weak-password'] }, async ({ registerPage, loginPage, page }) => {
             await test.step('Fill password with less than 8 characters', async () => {
                 await registerPage.registerPasswordInput.fill('admin123');
             });
@@ -151,6 +151,7 @@ test.describe('Registration - Field Validation', {
             });
             await test.step('Verify that a validation message "Password must be at least 8 characters long." is displayed', async () => {
                 await loginPage.verifyPasswordErrorMessage(passwordWeakErrorMessage);
+                await page.screenshot({ path: 'test-screenshot/unsuccessful-registration.png', fullPage: true })        
             });
         });
         test('Verify filling required fields with blank spaces displays validation message', {annotation: { type: 'Issue', description: 'No validation message is displayed for blank spaces', }
@@ -204,7 +205,7 @@ test.describe('Registration - Successful flow', {
         await profilePage.clickSecurity();
         await profilePage.deleteAccount();
     });
-    test('Verify that registration completes and redirects to dashboard', { tag: ['@HappyPath'] }, async ({ registerPage, loginPage }) => {
+    test('Verify that registration completes and redirects to dashboard', { tag: ['@HappyPath'] }, async ({ registerPage, loginPage, page }) => {
         await test.step('Fill in all fields', async () => {
             await registerPage.fillOptionalFields(testUser.firstName, testUser.lastName);
             await registerPage.fillRequiredFields(testUser.email, testUser.username, testUser.password);
@@ -214,6 +215,7 @@ test.describe('Registration - Successful flow', {
         });
         await test.step('Verify user profile displays correct information', async () => {
             await loginPage.verifyProfileDetails(testUser.firstName + ' ' + testUser.lastName, testUser.username, testUser.email);
+            await page.screenshot({ path: 'test-screenshot/successful-registraion.png', fullPage: true })        
         });
     });
     test('Verify First Name accepts valid characters', { tag: ['@validation', '@HappyPath'] }, async ({ loginPage, registerPage }) => {
