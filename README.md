@@ -110,6 +110,14 @@ npx playwright show-report
 - All test data is generated dynamically.
 - This ensures unique test users each run and avoids conflicts.
 
+###🔑 Key Features
+- Page Object Model (POM): Keeps code reusable and organized.
+- Faker.js Integration: Generates random users for each run.
+- Storage State: Skips re-login for profile tests, speeds up execution.
+- Visual Regression Testing: .toHaveScreenshot used with masking to ignore dynamic data.
+- Serial Execution for Profile: Ensures tests run in logical order (update name → username → email → password).
+- Screenshots on Failure: Automatically saved for easier debugging.
+
 ---
 
 ### 📄 Overview###
